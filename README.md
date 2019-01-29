@@ -6,17 +6,21 @@ Bing Liu liubing@pitt.edu
 Ivet Bahar bahar@pitt.edu
 † These authors made equal contributions
 
-The data of drug-target interactions from DrugBank, chemical-protein interactions from STITCH and pathways from KEGG were pre-processed and stored on our server for future online server development. 'get_DrugBank_targets_and_pathways.py' and 'get_STITCH_targets_pathways.py' here are for analysis methods demonstration purpose, readers can get access to the original data from the following links:
+The data of drug-target interactions from DrugBank, chemical-protein interactions from STITCH and pathways from KEGG were pre-processed and stored on our server for future online server development. 'get_DrugBank_targets_and_pathways.py' and 'get_STITCH_targets_pathways.py' connect the database on our server, the password is not open to public, here for analysis methods demonstration purpose.
 
-**The latest DrugBank data is publically accessable: https://www.drugbank.ca/releases/latest#external-links.**
-Download drug information:
-Command:	
-curl -Lfv -o Drugs_all.zip -u user:password https://www.drugbank.ca/releases/5-1-1/downloads/all-drug-links
-curl -Lfv -o Drugs_approved.csv -u user:password https://www.drugbank.ca/releases/5-1-1/downloads/approved-drug-links
+## data processing
+Before using the analysis code, readers can get access to the original data from the following links:
 
-Download drug-target information:
-curl -Lfv -o dt_known_all.zip -u user:password https://www.drugbank.ca/releases/5-1-1/downloads/target-all-uniprot-links
-curl -Lfv -o dt_known_approved.zip -u user:password https://www.drugbank.ca/releases/5-1-1/downloads/target-approved-uniprot-links
+**The latest DrugBank data is publically accessable: https://www.drugbank.ca/releases/latest#external-links.**  
+
+Download drug information:  
+Command:  	
+curl -Lfv -o Drugs_all.zip -u user:password https://www.drugbank.ca/releases/5-1-1/downloads/all-drug-links  
+curl -Lfv -o Drugs_approved.csv -u user:password https://www.drugbank.ca/releases/5-1-1/downloads/approved-drug-links  
+
+Download drug-target information:  
+curl -Lfv -o dt_known_all.zip -u user:password https://www.drugbank.ca/releases/5-1-1/downloads/target-all-uniprot-links  
+curl -Lfv -o dt_known_approved.zip -u user:password https://www.drugbank.ca/releases/5-1-1/downloads/target-approved-uniprot-links  
 
 Download target identifiers:
 curl -Lfv -o pros_all.zip -u user:password https://www.drugbank.ca/releases/5-1-1/downloads/target-all-polypeptide-ids
@@ -37,10 +41,17 @@ ReadMe file explains the detailed columns:ftp://ftp.uniprot.org/pub/databases/un
 'path2name.txt' # downloaded from http://rest.kegg.jp/link/hsa/pathway
 'kegg_class.txt' # get this information from https://www.kegg.jp/kegg/pathway.html (the original version was downloadable)
 
-**The code for applying PMF on DrugBank (small dataset) is accessible: http://balestra1.csb.pitt.edu/static/balestraweb.zip**
-**The method for applying PMF on STITCH (large scale computation): http://bickson.blogspot.com/2012/12/collaborative-filtering-with-graphchi.html**
+## Predicting drug-target interaction using probabilistic matrix factorization (PMF) method
 
+**The method of applying PMF on DrugBank (small dataset) is accessible: http://balestra1.csb.pitt.edu/static/balestraweb.zip**
+**The method of applying PMF on STITCH (large scale computation): http://bickson.blogspot.com/2012/12/collaborative-filtering-with-graphchi.html**
 
+## Get targets and pathways for a input list of drugs
+
+get_DrugBank_targets_and_pathways.py
+get_STITCH_targets_pathways.py
+
+##
 
 
 
