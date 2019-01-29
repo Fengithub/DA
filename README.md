@@ -52,12 +52,14 @@ Click [here](http://bickson.blogspot.com/2012/12/collaborative-filtering-with-gr
 
 ## Get targets and pathways for a input list of drugs  
 
+input a list of drugs, return the known and predicted drug-target interactions, enriched targets, enriched pathways.  
+
 get_DrugBank_targets_and_pathways.py    
 get_STITCH_targets_pathways.py    
 
 ## Perform pathway enrichment analysis given a input list of drug-target interactions
 
-pathway_enrichment.py (the enrichment analysis is based on the number of targets, same if input a list of targets)  
+pathway_enrichment.py (the enrichment analysis is based on the number of targets, same if input a list of targets, it is used when you want to merge drug-target interactions from different databases)  
 adjust_pval.py (FDR correction for pathway enrichment analysis)  
 
 
