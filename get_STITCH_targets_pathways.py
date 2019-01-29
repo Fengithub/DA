@@ -14,7 +14,7 @@ import numpy as np
 plt.switch_backend('agg')
 
 try:
-	conn = psycopg2.connect(database="balestra", user="fep7", password="Balestra2017", host="127.0.0.1", port="5432")
+	conn = psycopg2.connect(database="database", user="username", password="password", host="---", port="---")
 except:
 	out_log.write("I am unable to connect to the database\n")
 
@@ -42,7 +42,8 @@ if not os.path.exists(folder):
 	os.makedirs(folder)
 
 max_known = 200
-cutoff_score = 0.3 # cutoff score for known interactions
+cutoff_score_known = 0.4 # cutoff score for known interactions
+cutoff_score_pred = 0.7 # cutoff score for predicted interactions
 
 def split_drugs(drug_list):
 	table_num2drugs = {}
@@ -175,7 +176,7 @@ def get_d2t_known(query_index_lst, table_num, dt, td):
 			for i in range(min(len(pro_index_list), max_known)):
 				pro_index = int(pro_index_list[i])
 				interaction = float(score_list[i])
-				if interaction >= cutoff_score:
+				if interaction >= cutoff_score_known:
 					dt.setdefault(chem_index,set()).add((pro_index,interaction))
 					td.setdefault(pro_index,set()).add((chem_index,interaction))
 	return [dt, td]
@@ -195,46 +196,9 @@ def get_d2t_predict(query_index_lst, table_num, dt, td):
 			for i in range(min(len(pro_index_list), max_pred)):
 				pro_index = int(pro_index_list[i])
 				interaction = float(score_list[i])
-				dt.setdefault(chem_index,set()).add((pro_index,interaction))
-				td.setdefault(pro_index,set()).add((chem_index,interaction))
-	return [dt, td]
-
-def get_t2d_known(query_index_lst, table_num, dt, td): 
-	"""
-	take target indexes as input, search known chemicals for them
-	return drug2target, target2drug dicts
-	"""
-	tbl_dt = tbl_td_known + table_num 	
-	cur.execute("select pro_index, chem_index_list, score_list from "+ tbl_dt +" where pro_index in "+query_index_lst+";")
-	rows = cur.fetchall()
-	if rows != []:
-		for pro_index, chem_index_list, score_list in rows:
-			chem_index_list = chem_index_list.split(';')
-			score_list = score_list.split(';')
-			for i in range(min(len(chem_index_list), max_known)):
-				chem_index = int(chem_index_list[i])
-				interaction = float(score_list[i])
-				dt.setdefault(chem_index,set()).add((pro_index,interaction))
-				td.setdefault(pro_index,set()).add((chem_index,interaction))
-	return [dt, td]
-
-def get_t2d_predict(query_index_lst, table_num, dt, td):
-	"""
-	take target indexes as input, search predicted chemicals for them
-	return drug2target, target2drug dicts
-	"""
-	tbl_dt = tbl_td_predict + table_num		
-	cur.execute("select pro_index, chem_index_list, score_list from "+ tbl_dt +" where pro_index in "+query_index_lst+";")
-	rows = cur.fetchall()
-	if rows != []:
-		for pro_index, chem_index_list, score_list in rows:
-			chem_index_list = chem_index_list.split(';')
-			score_list = score_list.split(';')
-			for i in range(min(max_pred,len(chem_index_list))):
-				chem_index = int(chem_index_list[i])
-				interaction = float(score_list[i])
-				dt.setdefault(chem_index,set()).add((pro_index,interaction))
-				td.setdefault(pro_index,set()).add((chem_index,interaction))
+				if interaction >= cutoff_score_pred:
+					dt.setdefault(chem_index,set()).add((pro_index,interaction))
+					td.setdefault(pro_index,set()).add((chem_index,interaction))
 	return [dt, td]
 
 def get_simi_drug_pairs(query_index_lst, query_index_set, ind2drug, table_num, simi_in, simi_out):

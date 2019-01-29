@@ -12,7 +12,7 @@ import numpy as np
 plt.switch_backend('agg')
 
 try:
-	conn = psycopg2.connect(database="balestra", user="fep7", password="Balestra2017", host="127.0.0.1", port="5432")
+	conn = psycopg2.connect(database="database", user="username", password="password", host="---", port="---")
 except:
 	out_log.write("I am unable to connect to the database\n")
 
@@ -38,6 +38,8 @@ tbl_d2t_predict = prefix + dataset +'_prediction_d2t'
 tbl_t2d_predict = prefix + dataset +'_prediction_t2d'
 tbl_D2D = prefix + dataset +'_d2d_list'
 tbl_T2T = prefix + dataset +'_t2t_list'
+
+cutoff_score_pred = 0.7 # cutoff score for predicted interactions
 
 # make a results folder #
 if not os.path.exists(folder):
@@ -180,8 +182,9 @@ def get_d2t_predict(query_index_lst, max_pred):
 			for i in range(min(num_pred, max_pred)):
 				pro_index = int(pro_index_list[i])
 				interaction = float(score_list[i])
-				dt.setdefault(drug_index,set()).add((pro_index,interaction))
-				td.setdefault(pro_index,set()).add((drug_index,interaction))
+				if interaction >= cutoff_score_pred:
+					dt.setdefault(drug_index,set()).add((pro_index,interaction))
+					td.setdefault(pro_index,set()).add((drug_index,interaction))
 	return [dt, td]
 
 def get_paths(path2pro):
@@ -570,38 +573,6 @@ def find_target(query, ind2pro, d2t, t2d):
 			d2t.setdefault(d,set()).add((query_index,1))
 			t2d.setdefault(query_index,set()).add((d,1))
 	return [query_index, ind2pro, d2t, t2d]
-
-def get_t2d_known(query_index_lst):
-	"""input a list of protein indexes, find the known drugs for them, return two dictionaries: drug2target, target2drug """
-	dt = {}
-	td = {}
-	cur.execute("select pro_index, drug_inds from "+ tbl_pro_index +" where pro_index in "+query_index_lst+";")
-	rows = cur.fetchall()
-	if rows != []:
-		for pro_index, drug_inds in rows:
-			drug_inds = drug_inds.split(';')
-			for d in drug_inds:
-				drug_index = int(d)
-				dt.setdefault(drug_index,set()).add((pro_index,1))
-				td.setdefault(pro_index,set()).add((drug_index,1))
-	return [dt, td]
-
-def get_t2d_predict(query_index_lst, max_pred):
-	"""input a list of target indexes, find the predicted drugs for them, return two dictionaries: drug2target, target2drug """
-	dt = {}
-	td = {}
-	cur.execute("select pro_index, drug_index_list, score_list from "+ tbl_t2d_predict +" where pro_index in "+query_index_lst+";")
-	rows = cur.fetchall()
-	if rows != []:
-		for pro_index, drug_index_list, score_list in rows:
-			drug_index_list = drug_index_list.split(';')
-			score_list = score_list.split(';')
-			for i in range(min(max_pred,len(drug_index_list))):
-				drug_index = int(drug_index_list[i])
-				interaction = float(score_list[i])
-				dt.setdefault(drug_index,set()).add((pro_index,interaction))
-				td.setdefault(pro_index,set()).add((drug_index,interaction))
-	return [dt, td]
 
 def get_simi_pro_pairs(query_index_lst, query_index_set, ind2pro):
 	"""
