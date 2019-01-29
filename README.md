@@ -55,9 +55,9 @@ Click [here](http://bickson.blogspot.com/2012/12/collaborative-filtering-with-gr
 get_DrugBank_targets_and_pathways.py    
 get_STITCH_targets_pathways.py    
 
-## Perform pathway enrichment analysis given a input list of drug-target interaction pairs
+## Perform pathway enrichment analysis given a input list of drug-target interactions
 
-pathway_enrichment.py (the enrichment analysis is based on the number of targets, same as input a list of targets)  
+pathway_enrichment.py (the enrichment analysis is based on the number of targets, same if input a list of targets)  
 adjust_pval.py (FDR correction for pathway enrichment analysis)  
 
 
