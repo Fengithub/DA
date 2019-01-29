@@ -9,7 +9,7 @@ Ivet Bahar bahar@pitt.edu
 The data of drug-target interactions from DrugBank, chemical-protein interactions from STITCH and pathways from KEGG were pre-processed and stored on our server for future online server development. 'get_DrugBank_targets_and_pathways.py' and 'get_STITCH_targets_pathways.py' connect the database on our server, the password is not open to public at present. The codes posted here are for analysis methods demonstration purpose.
 
 ## Data processing
-Before using the analysis code, readers can get access to the original data from the following links:
+Before using the posted code, readers can get access to the original data from the following links:
 
 **[Download the latest DrugBank data](https://www.drugbank.ca/releases/latest#external-links)**  
 
