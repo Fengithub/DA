@@ -13,7 +13,8 @@ Before using the analysis code, readers can get access to the original data from
 
 **[Download the latest DrugBank data](https://www.drugbank.ca/releases/latest#external-links)**  
 
-Download drug information:    	
+Download drug information:     	
+
 curl -Lfv -o Drugs_all.zip -u user:password https://www.drugbank.ca/releases/5-1-1/downloads/all-drug-links  
 curl -Lfv -o Drugs_approved.csv -u user:password https://www.drugbank.ca/releases/5-1-1/downloads/approved-drug-links  
 
@@ -42,15 +43,21 @@ Select 'HUMAN_9606_idmapping_selected.tab'
 
 ## Predicting drug-target interactions using probabilistic matrix factorization (PMF) method  
 
-**Click [here](http://balestra1.csb.pitt.edu/static/balestraweb.zip) for the code of applying PMF on DrugBank (small dataset)**  
-**Click [here](http://bickson.blogspot.com/2012/12/collaborative-filtering-with-graphchi.html) for the method of applying PMF on STITCH (large scale computation)**  
+Click [here](http://balestra1.csb.pitt.edu/static/balestraweb.zip) for the code of applying PMF on DrugBank (small dataset)   
+Click [here](http://bickson.blogspot.com/2012/12/collaborative-filtering-with-graphchi.html) for the method of applying PMF on STITCH (large scale computation)   
+
+## Calculate 2D similarities for a input lis of drugs
+
+2D_similarity.py  
 
 ## Get targets and pathways for a input list of drugs  
 
 get_DrugBank_targets_and_pathways.py    
 get_STITCH_targets_pathways.py    
 
-## 
+## Perform pathway enrichment analysis given a input list of drug-target interaction pairs
 
+pathway_enrichment.py (the enrichment analysis is based on the number of targets, same as input a list of targets)  
+adjust_pval.py (FDR correction for pathway enrichment analysis)  
 
 
