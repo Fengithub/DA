@@ -32,7 +32,7 @@ choose organism: Homo sapiens
 
 Download [chemical-protein links](http://stitch.embl.de/download/protein_chemical.links.detailed.v5.0/9606.protein_chemical.links.detailed.v5.0.tsv.gz) (with detailed subscores)
 	
-**[Download Uniprot protein ID mapping](ftp://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/idmapping/)**  
+**[Download Uniprot protein ID mapping] using ftp://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/idmapping/**  
 Select 'HUMAN_9606_idmapping_selected.tab'  
 [ReadMe file](ftp://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/idmapping/README) explains the detailed columns.  
 
